@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchProducer", "BatchProducer\BatchProducer.csproj", "{2CF65346-6ACE-4C8C-90C2-1D4A4D268E79}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BatchProcessing", "BatchProcessing\BatchProcessing.fsproj", "{4F39FAA7-F787-4A09-8896-2BDED3410617}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CF65346-6ACE-4C8C-90C2-1D4A4D268E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF65346-6ACE-4C8C-90C2-1D4A4D268E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF65346-6ACE-4C8C-90C2-1D4A4D268E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF65346-6ACE-4C8C-90C2-1D4A4D268E79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F39FAA7-F787-4A09-8896-2BDED3410617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F39FAA7-F787-4A09-8896-2BDED3410617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F39FAA7-F787-4A09-8896-2BDED3410617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F39FAA7-F787-4A09-8896-2BDED3410617}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

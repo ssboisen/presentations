@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Fracture</id>
+    <version>0.1.69</version>
+    <title>Fracture</title>
+    <authors>Dave Thomas,  Ryan Riley</authors>
+    <owners>Dave Thomas,  Ryan Riley</owners>
+    <licenseUrl>http://github.com/fractureio/fracture/raw/master/LICENSE.txt</licenseUrl>
+    <projectUrl>http://github.com/fractureio/fracture</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Fracture is an F# based socket implementation for high-speed, high-throughput applications. It is built on top of SocketAsyncEventArgs, which minimises the memory fragmentation common in the IAsyncResult pattern.</description>
+    <summary>Fracture is an F# based socket implementation for high-speed, high-throughput applications. It is built on top of SocketAsyncEventArgs, which minimises the memory fragmentation common in the IAsyncResult pattern.</summary>
+    <releaseNotes />
+    <copyright />
+    <language>en-US</language>
+    <tags>socket networking tcp http fsharp</tags>
+    <dependencies>
+      <dependency id="HttpMachine" version="[0.9.0.0]" />
+    </dependencies>
+  </metadata>
+</package>

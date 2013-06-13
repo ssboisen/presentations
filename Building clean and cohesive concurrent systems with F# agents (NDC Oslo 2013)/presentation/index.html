@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>Building clean and cohesive concurrent systems with F# agents</title>
+
+<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+<meta name="author" content="Hakim El Hattab">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<link rel="stylesheet" href="css/reveal.min.css">
+<link rel="stylesheet" href="css/theme/serif.css" id="theme">
+
+<!-- For syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+<script>
+document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+</script>
+
+<!--[if lt IE 9]>
+	<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->
+<style>
+	img { border: 0px !important; vertical-align: middle !important; border: transparent !important; box-shadow: none !important; }
+	p.ref { font-size: 10px; }
+</style>
+</head>
+
+<body>
+
+<div class="reveal">
+
+	<!-- Any section element inside of this container is displayed as a slide -->
+	<div class="slides">
+
+		<section >
+			<div style="background-image: url('agent.png'); width: 812px; height: 768px;margin-left:80px">
+				<div style="position: absolute; width: 320px;text-align:left;top: 260px;">Building clean and cohesive concurrent systems with<br/> F# agents</div>
+        <p style="position: absolute; bottom: -10px;right: 160px" class="ref">http://litefiredark.deviantart.com/art/Secret-Agent-Man-43735368</p>
+      </div>
+		</section>
+
+		<section>
+			<p>My name is Simon and this is my face <img width="180px" src="simon.png" /></p>
+			<p class="fragment">I'm a father of <img width="80px" src="ida_laura.jpg" /> and I'm from <img height="80px" src="dannebrog.gif" /></p>
+			<p class="fragment">MSc. from <img height="80px" src="au-ingenioerhoejskolen_en.gif" /> in distributed RT systems</p>
+			<p class="fragment">I work at <a href="http:/www.d60.dk"><img width="120px" src="d60_Logo.png" /></a> were we do software and BI</p>
+			<p class="fragment">I'm ssboisen on <a href="http://www.twitter.com/ssboisen"><img width="80px" src="twitter-bird-light-bgs.png" /></a> and <a href="http://www.github.com/ssboisen"><img width="80px" src="octocat.png" /></a> and <a href="http://www.linkedin.com/in/ssboisen"><img width="80px" src="linkedin-logo.jpg" /></a></p>
+		</section>
+
+		<section>
+			<section>
+				<h2>The Premise</h2>
+				<p>Number of cores have been increasing</p>
+				<p>Free lunch is over</p>
+				<p><img width="350px" src="cpu.png" /> <p class="ref">http://www.gotw.ca/publications/concurrency-ddj.htm</p></p>
+			</section>
+			<section>
+				<p>Utilizing new CPUs requires parallel execution</p>
+				<p>Shared-memory multiprogramming is hard and messy</p>
+				<br />
+				<figure>
+					<blockquote style="box-shadow: none" cite="http://www.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-1.pdf">... non-trivial multi-threaded programs are incomprehensible to human.</blockquote>
+					<figcaption style="font-size: 15px" ><a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-1.pdf">— Edward A. Lee, The Problem with Threads</a></figcaption>
+				</figure>
+				<p><img width="450px" src="deadlock.jpg" /> <p class="ref">http://img.thedailywtf.com/images/200802/deadlock.JPG</p></p>
+			</section>
+			<section>
+				<p>I/O-heavy reality makes async execution a must</p>
+				<p><img width="500px" src="io-cost.png" /> <p class="ref">http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/</p></p>
+				<br/>
+				<p class="fragment">We need a better programming model</p>
+			</section>
+		</section>
+    <section>
+      <h2>Different options in handling concurrency</h2>
+      <ul>
+        <li>
+          Software Transactional Memory
+          <ul>
+            <li>Shared memory model</li>
+            <li>Transactional like a db</li>
+            <li>Optimistic concurrency</li>
+          </ul>
+        </li>
+        <li>
+          Actors
+          <ul>
+            <li>Message passing</li>
+            <li>Shared-nothing memory model</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+		<section>
+			<section>
+				<h2>The Actor Model</h2>
+				<div class="fragment">
+					<p>Mathematical model of concurrent computation by Professor Carl Hewitt of Stanford University
+					<div style="float: right">
+						<img src="Hewitt.jpg"/><p class="ref">http://people.csail.mit.edu/psz/LCS-75/Hewitt.jpg</p>
+					</div>
+					</p>
+				</div>
+				<p class="fragment">Actors as the universal primitive of computation</p>
+				<p class="fragment">Embodies processing, storage and communication</p>
+			</section>
+			<section>
+				<h2>What is an actor?</h2>
+				<div class="fragment">
+					<p>Autonomous and concurrent object <br/>that executes asynchronously
+					<img src="actor.gif" style="float: right" /></p>
+				</div>
+				<p class="fragment">Has a mailbox through which it receives messages</p>
+				<p class="fragment">The mailbox/actor has an address</p>
+			</section>
+			<section>
+				<h2>What can an actor do?</h2>
+				<p class="fragment">Receive and process messages</p>
+				<p class="fragment">Create new actors</p>
+        <div class="fragment">
+				  <p>Send messages to other actors</p>
+            <img src="actortoactor.gif" />
+        </div>
+				<p class="fragment">Designate how to handle the next message it receives</p>
+			</section>
+			<section>
+				<h2>All about messages</h2>
+				<p class="fragment">The order of receival is not guarenteed</p>
+				<p class="fragment">Each message will be delivered at most once</p>
+				<p class="fragment">When only one message is being processed at a time you have implicit synchronization</p>
+			</section>
+		</section>
+		<section>
+			<section>
+				<h2>F# agents</h2>
+        <div class="fragment">
+				  <p>Similar to actors but not exactly the same</p>
+          <img style="float: right;" src="agentwithglasses2.png" />
+        </div>
+				<p class="fragment">Built on F# asyncs and runs on the threadpool</p>
+				<p class="fragment">Thousands of async agents per thread</p>
+				<p class="fragment">Messages are received in order in a sender-receiver pair</p>
+			</section>
+			<section>
+				<h3>Differences to Erlang, Akka and the actor model</h3>
+				<p class="fragment">Not distributed, the address is the identifier of the object</p>
+				<p class="fragment">Messages are delivered exactly once</p>
+				<p class="fragment">No built-in durable mailboxes</p>
+				<p class="fragment">No built-in supervision-support</p>
+			</section>
+
+			<section>
+				<h3>So what does it look like in F#</h3>
+				<div>
+					<pre><code>type CalcOperations =
+	| Add of int 
+	| Subtract of int 
+	| Total of AsyncReplyChannel&lt;int&gt;
+
+let calc = MailboxProcessor.Start(fun inbox -&gt;
+	let rec loop total = async {
+		let! msg = inbox.Receive()
+		match msg with
+		  | Add(i) -&gt; return! loop (total + i) 
+		  | Subtract(i) -&gt; return! loop (total - i) 
+		  | Total(c) -&gt; c.Reply(total); return! loop total
+		}
+	loop 0)
+calc.Post(Add(8))
+calc.Post(Subtract(3))
+let total = calc.PostAndReply(fun rc -> Total(rc)) // total = 5
+					</code></pre>
+				</div>
+			</section>
+		</section>
+
+		<section>
+			<h2>demo-time</h2>
+		</section>
+
+		<section>
+			<h2>references:</h2>
+      <p><a href="http://channel9.msdn.com/Shows/Going+Deep/Hewitt-Meijer-and-Szyperski-The-Actor-Model-everything-you-wanted-to-know-but-were-afraid-to-ask">The Actor Model - Everything you wanted to know but were afraid to ask</a></p>
+      <p><a href="http://www.fsharp.org">fsharp.org</a></p>
+      <p><a href="http://www.tryfsharp.org">tryfsharp.org</a></p>
+		</section>
+		</div>
+
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.min.js"></script>
+	<script src="js/jquery-1.9.0.min.js"></script>
+	<script>
+
+// Full list of configuration options available here:
+	// https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+		theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+		transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+		// Optional libraries used to extend on reveal.js
+		dependencies: [
+			{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+			{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+			{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+			{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+			// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+		]
+	});
+
+	Reveal.addEventListener( 'fragmentshown', function( event ) {
+		if(event.fragment.className.indexOf('grow') !== -1) {
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('clojurescript', 'typescript');
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('coffeescript','clojurescript');
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('javascript','coffeescript');
+		}
+	} );
+	Reveal.addEventListener( 'fragmenthidden', function( event ) {
+		if(event.fragment.className.indexOf('grow') !== -1) {
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('coffeescript', 'javascript');
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('clojurescript', 'coffeescript');
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('typescript', 'clojurescript');
+		}
+	} );
+	</script>
+
+	</body>
+	</html>

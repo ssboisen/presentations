@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>nodejs intro</title>
+
+<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+<meta name="author" content="Hakim El Hattab">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<link rel="stylesheet" href="css/reveal.min.css">
+<link rel="stylesheet" href="css/theme/serif.css" id="theme">
+
+<!-- For syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+<script>
+document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+</script>
+
+<!--[if lt IE 9]>
+	<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+	<!-- Any section element inside of this container is displayed as a slide -->
+	<div class="slides">
+
+		<section data-state="soothe">
+			<img style="box-shadow: 0 0 0px; background: initial;  border: 0px" src="nodejs-logo2.png" >
+			<h3>high-performance network-</h3>
+			<h3>applications made easy</h3>
+			<p>
+			<small>A presentation by <a href="http://www.skov-boisen.dk.se">Simon Skov Boisen</a> / <a href="http://twitter.com/ssboisen">@ssboisen</a></small>
+			</p>
+		</section>
+
+		<section>
+			<section>
+				<h2>wat?</h2>
+				<p>relatively low-level api for creating</p>
+				<p>all sorts of network-applications</p>
+				<br />
+				<div class="fragment">
+					<p>originally created by Ryan Dahl</p>
+					<img src="ryandahl.jpg" width="40%" />
+				</div>
+			</section>
+			<section>
+				<h2>waat?</h2>
+				<p> asynchronous i/o framework written in c++</p>
+				<p>on top of the v8 engine </p>
+			</section>
+			<section>
+				<h2>waaat?</h2>
+				<p>an implementation of the reactor-pattern</p>
+				<p>by Douglas C. Smidth </p>
+			</section>
+			<section>
+				<h2>waaaat?</h2>
+				<p>
+				an object behavioral pattern for demultiplexing and dispatching handles for synchronous events
+				</p>
+			</section>
+			<section>
+				<h2>waaaaaaaaaat?!!!!111</h2>
+				<div class="fragment">
+					<p> it's just 
+					<div class="fragment grow">
+						<div class="fragment grow">
+							<p class="fragment grow"> javascript </p>
+						</div>
+					</div>
+					on the server
+					</p>
+				</div>
+			</section>
+		</section>
+
+		<section>
+			<section>
+				<h2>so wat?</h2>
+				<div class="fragment">
+					<p>it's fast!</p>
+					<img style="box-shadow: 0 0 0px; background: initial;  border: 0px" src="nodejsfast.png">
+				</div>
+				<div class="fragment">
+					<p>it's concurrent!</p>
+					<img style="box-shadow: 0 0 0px; background: initial;  border: 0px" src="1million.png">
+				</div>
+			</section>
+
+			<section>
+				<h3>it's simple</h2>
+				<div>
+					<pre><code>
+var http = require('http');
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(1337, '127.0.0.1');
+
+console.log('Server running at http://127.0.0.1:1337/');
+					</code></pre>
+				</div>
+			</section>
+			<section>
+				<h3>and it has an awesome community</h3>
+				<div class="fragment">
+					<p>very large - total packages: 21 842</p>
+				</div>
+				<div class="fragment">
+					<p>very active - 5 260 130 downloads in the last week</p>
+				</div>
+				<p class="fragment">very friendly</p>
+			</section>
+		</section>
+
+		<section>
+			<h2>but why?</h2>
+			<img style="box-shadow: 0 0 0px; background: initial;  border: 0px" src="io-cost.png" />
+		</section>
+
+		<section>
+			<h2>but how?</h2>
+			<p>single threaded server with a background threadpool</p>
+			<img style="box-shadow: 0 0 0px; background: initial;  border: 0px" src="eventloop.png" />
+		</section>
+
+		<section>
+			<section>
+				<h2>what about asp.net?</h2>
+				<p>uses a thread per connection from the threadpool</p>
+				<p class="fragment"><img src="io-doingitwrong.jpg"/></p>
+			</section>
+			<section>
+				<p>context-switching is not free</p>
+				<p class="fragment">synchronization is not free</p>
+
+				<div class="fragment">
+					<p>deadlocks are not fun</p>
+					<img src="deadlock.jpg"/>
+				</section>
+				<section>
+					<h2>so wat?</h2>
+					<img style="box-shadow: 0 0 0px; background: initial;  border: 0px" src="nginx-apache-memory.png" />
+					<p>native is 64kb per thread but managed threads are preallocated at 1mb</p>
+				</section>
+				<section>
+					<h2>but async?</h2>
+
+					<pre><code>
+ThreadPool.QueueUserWorkItem(
+	new WaitCallback(TheTaskToRun), null);
+					</code></pre>
+					<p>naive asynchronous code still use one thread per connection from the asp.net thread pool</p>
+
+					<div class="fragment">
+						<p>and adds</p>
+						<p><b>additional context-switching</b></p>
+					</div>
+				</section>
+				<section>
+					<h2>but async?!!11</h2>
+					<p>using the traditional asynchronous apis (BeginX/EndX) or the new in .NET 4.5 you use iocps</p>
+				</section>
+				<section>
+					<h2>iocp u say?</h2>
+					<img src="c3po.jpg" />
+					<p>i/o completion port</p>
+					<p>highperformance async i/o handled by the OS</p>
+					<p>optimized for cpu-counts and cpu-caching</p>
+				</section>
+			</section>
+
+			<section>
+				<h2>then what's the problem?</h2>
+				<p class="fragment">cultural</p>
+				<p class="fragment">infrastructural</p>
+			</section>
+
+			<section>
+				<section>
+					<h2>iocp all the things!</h2>
+					<p>nodejs uses iocp on windows and</p><p>epoll/kqueue on unix for all i/o</p>
+				</section>
+
+				<section>
+					<h2>single-threaded</h2>
+					<p class="fragment">you (almost) can't block with i/o</p>
+					<p class="fragment">but don't do really cpu intensive tasks</p>
+				</section>
+			</section>
+
+			<section>
+				<h2>demo-time</h2>
+			</section>
+
+			<section>
+				<h2>references:</h2>
+				<p><a href="http://wwww.nodejs.org">nodejs.org</a></p>
+				<p><a href="http://www.cse.wustl.edu/~schmidt/PDF/reactor-siemens.pdf">Reactor-pattern</a></p>
+				<p><a href="http://msdn.microsoft.com/en-us/library/aa365198(VS.85).aspx">I/O Completion Ports</a></p>
+				<p><a href="blog.caustik.com/2012/08/19/node-js-w1m-concurrent-connections/">Node.js w/1M concurrent connections!</a></p>
+				<p><a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/">Understanding the node.js event loop</a></p>
+				<p><a href="http://pluralsight.com/training/courses/TableOfContents?courseName=node-intro">Pluralsight course</a></p>
+			</section>
+		</div>
+
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.min.js"></script>
+	<script src="js/jquery-1.9.0.min.js"></script>
+	<script>
+
+// Full list of configuration options available here:
+	// https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+		theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+		transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+		// Optional libraries used to extend on reveal.js
+		dependencies: [
+			{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+			{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+			{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+			{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+			// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+		]
+	});
+
+	Reveal.addEventListener( 'fragmentshown', function( event ) {
+		if(event.fragment.className.indexOf('grow') !== -1) {
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('clojurescript', 'typescript');
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('coffeescript','clojurescript');
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('javascript','coffeescript');
+		}
+	} );
+	Reveal.addEventListener( 'fragmenthidden', function( event ) {
+		if(event.fragment.className.indexOf('grow') !== -1) {
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('coffeescript', 'javascript');
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('clojurescript', 'coffeescript');
+			event.fragment.innerHTML = event.fragment.innerHTML.replace('typescript', 'clojurescript');
+		}
+	} );
+	</script>
+
+	</body>
+	</html>

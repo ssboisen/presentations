@@ -1,0 +1,20 @@
+{
+  "name": "pong.io",
+  "version": "0.0.0",
+  "description": "multiplayer pong with socket.io and html5 canvas",
+  "window": {
+    "width": 800,
+    "height": 700,
+    "toolbar": false
+  },
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "Simon Skov Boisen <simon@skov-boisen.dk> (http://www.skov-boisen.dk)",
+  "license": "MIT",
+  "dependencies": {
+    "socket.io": "~0.9.13"
+  }
+}

@@ -1,0 +1,231 @@
+<!DOCTYPE html>  
+
+<html>  
+<head>  
+<title>pong.io</title>  
+<meta charset="utf-8">  
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>  
+<script src="/socket.io/socket.io.js"></script>
+
+<script>  
+
+$(document).ready(function() {  
+
+	var socket = io.connect('http://localhost');
+
+	socket.emit('join-game');
+
+	socket.on('game-ready', function(playerLane) {
+
+		var x;
+		var y;
+		var dx;
+		var dy;
+		var WIDTH;
+		var HEIGHT;
+		var ctx;
+		var lowerPlayer;
+		var lowerScore = 0;
+		var upperPlayer;
+		var upperScore = 0;
+		var paddleh;
+		var paddlew;
+		var radius;
+		var rightKey = 39;
+		var leftKey = 37;
+		var canvas = document.getElementById( 'myCanvas' );
+
+		function getLocalPlayerPosition() {
+			if(playerLane === 'upper')
+				return upperPlayer;
+			else 
+				return lowerPlayer;
+		}
+
+		function setLocalPlayerPosition(position) {
+			if(playerLane === 'upper')
+				upperPlayer = position;
+			else 
+				lowerPlayer = position;
+		}
+
+		socket.on('tick', function(gameState) {
+			lowerPlayer = gameState.lowerPosition;
+			upperPlayer = gameState.upperPosition;
+			x = gameState.ballPosition.x;
+			y = gameState.ballPosition.y;
+			lowerScore = gameState.score.lowerScore;
+			upperScore = gameState.score.upperScore;
+			$("#lowerScore").text(lowerScore);
+			$("#upperScore").text(upperScore);
+			draw();
+		});
+
+		var rightDown, leftDown;
+		function onKeyDown(evt) {
+			if (evt.keyCode == rightKey) {
+				rightDown = true;
+			}
+			else if (evt.keyCode == leftKey) {
+				leftDown = true;
+			}
+		}
+
+		function onKeyUp(evt) {
+			if (evt.keyCode == rightKey) {
+				rightDown = false;
+			}
+			else if (evt.keyCode == leftKey) {
+				leftDown = false;
+			}
+		}
+		if(playerLane !== 'spectator') {
+			$(document).keydown(onKeyDown);
+			$(document).keyup(onKeyUp);
+		}
+
+		function init_paddles() {
+			lowerPlayer = WIDTH / 2;
+			upperPlayer = lowerPlayer;
+			socket.emit('new-position', WIDTH / 2);
+			paddleh = 10;
+			paddlew = 75;
+		}
+
+		function init() {
+			ctx = canvas.getContext("2d");  
+			WIDTH = canvas.width;
+			HEIGHT = canvas.height;
+			x = 150;
+			y = 150;
+			dx = 5;
+			dy = 10;
+			radius = 10;
+			init_paddles();
+		}
+
+		function circle(x,y,r) {
+			ctx.beginPath();
+			ctx.arc(x, y, r, 0, Math.PI*2, true);
+			ctx.closePath();
+			ctx.fill();
+		}
+
+		function rect(x,y,w,h,c) {
+			ctx.beginPath();
+			ctx.rect(x,y,w,h);
+			ctx.fillStyle = c || 'black';
+			ctx.fill();
+			ctx.closePath();
+			ctx.fillStyle = 'black';
+		}
+
+		function clear() {
+			ctx.clearRect(0, 0, WIDTH, HEIGHT);
+		}
+
+		function drawSideLines() {
+			ctx.beginPath();
+			ctx.rect(0,0,10,HEIGHT);
+			ctx.closePath();
+			ctx.fill();
+
+			ctx.beginPath();
+			ctx.rect(WIDTH - 10,0,10,HEIGHT);
+			ctx.closePath();
+			ctx.fill();
+		}
+
+		function getLowerPlayerColor(){
+			if(playerLane === 'spectator')
+				return 'black';
+
+			return playerLane === 'lower' ? 'green' : 'red';
+		}
+
+		function getUpperPlayerColor(){
+			if(playerLane === 'spectator')
+				return 'black';
+			return playerLane === 'upper' ? 'green' : 'red';
+		}
+
+		function draw() {
+
+			var localPlayerPosition = getLocalPlayerPosition();
+
+			if (rightDown) {
+				if(localPlayerPosition + paddlew + 20 <= WIDTH) {
+					localPlayerPosition = localPlayerPosition + 20;
+				}
+			}
+			else if (leftDown) {
+				if(localPlayerPosition - 20 >= 0) {
+					localPlayerPosition = localPlayerPosition - 20;
+				}
+			}
+
+			clear();
+			circle(x, y, radius);
+
+			drawSideLines();
+			rect(lowerPlayer, HEIGHT-paddleh, paddlew, paddleh, getLowerPlayerColor());
+			rect(upperPlayer, 0, paddlew, paddleh, getUpperPlayerColor());
+
+			if(playerLane === 'upper') {
+				if (x + dx + radius > WIDTH || x + dx - radius < 0)
+					dx = -dx;
+
+				if (y + dy - radius <= 0) {
+					if (x <= upperPlayer || x >= upperPlayer + paddlew) {
+						var newLowerScore = lowerScore + 1;
+						socket.emit('new-score', { lowerScore: newLowerScore, upperScore: upperScore });
+						init();
+					}
+					else {
+						dx = 8 * ((x-(upperPlayer+paddlew/2))/paddlew);
+						dy = -dy;
+					}
+				}
+				else if (y + dy + radius > HEIGHT) {
+					if (x > lowerPlayer && x < lowerPlayer + paddlew) {
+						dx = 8 * ((x-(lowerPlayer+paddlew/2))/paddlew);
+						dy = -dy;
+					}
+					else {
+						var newUpperScore = upperScore +1;
+						socket.emit('new-score', { lowerScore: lowerScore, upperScore: newUpperScore});
+						init();
+					}
+				}
+
+				var newX = x + dx;
+				var newY = y + dy;
+
+				socket.emit('new-ball-position', { x: newX, y: newY });
+			}
+			socket.emit('new-position', localPlayerPosition);
+		}
+
+		init();
+	});
+});  
+</script>  
+</head>  
+
+<body>  
+<div style="width: 720">
+	<center>
+		<h3 id="upperScore">0</h3>
+	</center>
+</div>
+<canvas id="myCanvas" width="720" height="500">  
+	<!-- Insert fallback content here -->  
+</canvas>  
+<div style="width: 720">
+	<center>
+		<h3 id="lowerScore">0</h3>
+	</center>
+</div>
+</body>  
+</html>  

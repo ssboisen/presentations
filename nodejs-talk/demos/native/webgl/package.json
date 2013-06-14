@@ -1,0 +1,13 @@
+{
+  "name": "Hello 3D World",
+  "version": "1",
+  "main": "index.html",
+  "window": {
+    "frame": false,
+    "width": 500,
+    "height": 400,
+    "toolbar": false,
+    "position": "center",
+    "resizable": false
+  }
+}

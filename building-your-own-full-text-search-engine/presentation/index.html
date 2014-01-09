@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>reveal.js - The HTML Presentation Framework</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="css/reveal.min.css">
+	<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+	<!-- For syntax highlighting -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+	<script>
+		document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+	</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+		<style type="text/css">
+			img {
+				border: 0 !important;
+				box-shadow: 0 0 0 !important;
+				background: transparent !important;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<section>
+						<h1>Writing&nbsp;</h1>
+						<h1>your own&nbsp;</h1>
+						<h1>full-text&nbsp;</h1>
+						<h1>search engine</h1>
+					</section>
+					<section>
+						<h2>
+							<br>
+						</h2>
+						<div style="text-align: center;">My name is Simon and I'm a nerd</div>
+						<div style="text-align: center;">
+							<br>
+                        </div>
+                        <div style="text-align: center;">I work in the R&amp;D department at&nbsp;<img src="https://pbs.twimg.com/profile_images/1369848070/d60_Logo.png" style="border: 0;width: 107px; height: 107px; vertical-align:middle;max-height: none; max-width: none;">
+                        </div>
+                        <div style="text-align: center;">where we tinker on cool stuff</div>
+                        <div style="text-align: center;">
+                            <br>
+                        </div>
+                        <div style="text-align: center;">I'm <i>ssboisen</i> on <a href="http://www.twitter.com/ssboisen">
+                            <img style="width:80px;vertical-align:middle;max-height: none; max-width: none;" src="https://rawgithub.com/ssboisen/presentations/master/Building%20clean%20and%20cohesive%20concurrent%20systems%20with%20F%23%20agents%20(NDC%20Oslo%202013)/presentation/twitter-bird-light-bgs.png">
+                            </a> and <a href="http://www.github.com/ssboisen">
+                            <img style="width:80px;vertical-align:middle;max-height: none; max-width: none;" src="https://rawgithub.com/ssboisen/presentations/master/Building%20clean%20and%20cohesive%20concurrent%20systems%20with%20F%23%20agents%20(NDC%20Oslo%202013)/presentation/octocat.png">
+                            </a> and <a href="http://www.linkedin.com/in/ssboisen">
+                            <img style="width:80px;vertical-align:middle;max-height: none; max-width: none;" src="http://www.visolve.com/uploads/images/demo_banner_images/Linkedin.png" class="hoverZoomLink">
+                            </a>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <h2>Anatomy of a search server</h2>
+                    <div style="border-radius: 8px; padding: 30px; width: 93%; height: 550px; background-color: rgba(0,0,0,.2);">
+                        <div style="margin-bottom: 10px; margin-top: -15px; color: FFF">Search Server</div>
+                        <div class="fragment" style="border-radius: 8px; width: 100%; height: 225px; background-color: #FFF;">
+                            <p style="color: #000">Information Management</p>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #1040E0;">
+                                <p style="padding-top: 50px;font-size: 18px">api</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #EE1729;">
+                                <p style="padding-top: 50px; font-size: 18px">replication</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #FAAC00;">
+                                <p style="padding-top: 50px;font-size: 18px">caching</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #1040E0;">
+                                <p style="padding-top: 50px;font-size: 18px">consistency</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #07A915;">
+                                <p style="padding-top: 50px;font-size: 18px">persistence</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #EE1729;">
+                                <p style="padding-top: 50px;font-size: 18px">management</p>
+                            </span>
+                        </div>
+                        <div class="fragment" style="margin-top: 35px; border-radius: 8px; width: 100%; height: 225px; background-color: #FFF;">
+                            <p style="color: #000">Information Retrieval</p>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #1040E0;">
+                                <p style="padding-top: 50px;font-size: 18px">indexing</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #EE1729;">
+                                <p style="padding-top: 50px; font-size: 18px">querying</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #FAAC00;">
+                                <p style="padding-top: 50px;font-size: 18px">suggestions</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #1040E0;">
+                                <p style="padding-top: 50px;font-size: 18px">ranking</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #07A915;">
+                                <p style="padding-top: 50px;font-size: 18px">sorting</p>
+                            </span>
+                            <span  style="display: inline-block;  margin: 10px; border-radius: 8px; width: 12%; height: 60%; background-color: #EE1729;">
+                                <p style="padding-top: 50px;font-size: 18px">highlighting</p>
+                            </span>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <section>
+                        <h2>Indexing</h2>
+                        <p>Analyzing each document with a tokenizer to find the terms</p>
+                        <p>Can be as simple as splitting on space</p>
+                        <div style="border-radius: 8px; padding: 30px; width: 93%; height: 350px; background-color: rgba(0,0,0,.2);">
+                            <span style='display: inline-block; border-radius: 5px; width: 22%; height: 80%; background-color: rgb(203,124,87);'>
+                                <span class="fragment" style='display: inline-block; margin-top: 80px;' data-fragment-index="0">
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(166,187,37);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(228,183,64);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                </span>
+                            </span>
+                            <span style='display: inline-block; border-radius: 5px; width: 22%; height: 80%; background-color: rgb(139,51,155);'>
+                                <span class="fragment" style='display: inline-block; margin-top: 80px;' data-fragment-index="0">
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(148,19,229);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(43,86,86);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(86,24,217);'></span>
+                                </span>
+                            </span>
+                            <span style='display: inline-block; border-radius: 5px; width: 22%; height: 80%; background-color: rgb(208,54,122);'>
+                                <span class="fragment" style='display: inline-block; margin-top: 80px;' data-fragment-index="0">
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(190,74,30);'></span>
+                                </span>
+                            </span>
+                            <div class="fragment" style="margin-top: 40px" data-fragment-index="1">
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(166,187,37);'></span>
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(228,183,64);'></span>
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(148,19,229);'></span>
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(43,86,86);'></span>
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(86,24,217);'></span>
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(190,74,30);'></span>
+                            </div>
+                        </div>
+                        <p class="fragment" style="margin-top: 10px">In order to increase index quality and compress it different techniques can be used</p>
+                    </section>
+                    <section>
+                        <h3>Token processing</h3>
+                        <p>Stemming and lemmatization is the process of reducing words to their common form</p>
+                        <div id="sick" class="fragment">
+                            <svg width="100px" height="70px"></svg>
+                        </div>
+                        <div class="fragment fade-in">
+                            <ul >
+                                <li>Port Stemmer</li>
+                                <li>Snowball</li>
+                            </ul>
+                            <ul>
+                                <li>KStem</li>
+                                <li>Hunspell</li>
+                            </ul>
+                        </div>
+                        <br />
+                        <div class="fragment">
+                            <p>Stoplist helps with ignoring very common words.</p>
+                            <p>Lucene contains analyzers for different languages.</p>
+                        </div>
+                        <div class="fragment" style="margin-top: 40px">
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(166,187,37);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(228,183,64);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(148,19,229);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(43,86,86);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(86,24,217);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(190,74,30);'></span>
+                        </div>
+                        <div class="fragment" style="margin-top: 40px">
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(166,19,232);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(166,187,37);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(228,183,64);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(43,86,86);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(86,24,217);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                            <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(190,74,30);'></span>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Querying</h2>
+                        <p>Finding documents that matches the query</p>
+                        <br/>
+                        <h4>Standard Boolean Model</h4>
+                        <p>Based on set theory it powers AND/OR/NOT queries and will approve all the documents whos indexes fullfills the predicate</p>
+                        <div class="fragment" style="border-radius: 8px; padding: 30px; width: 93%; height: 350px; background-color: rgba(0,0,0,.2);">
+                            <span style='display: inline-block; border-radius: 5px; width: 22%; height: 80%; background-color: rgb(203,124,87);'>
+                                <span style='display: inline-block; margin-top: 80px;'>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(166,187,37);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(228,183,64);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                </span>
+                            </span>
+                            <span id="toremovebooleandoc" style='display: inline-block; border-radius: 5px; width: 22%; height: 80%; background-color: rgb(139,51,155);'>
+                                <span style='display: inline-block; margin-top: 80px;'>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(148,19,229);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(43,86,86);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(86,24,217);'></span>
+                                </span>
+                            </span>
+                            <span style='display: inline-block; border-radius: 5px; width: 22%; height: 80%; background-color: rgb(208,54,122);'>
+                                <span style='display: inline-block; margin-top: 80px;'>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(190,74,30);'></span>
+                                </span>
+                            </span>
+                            <span style='display: inline-block; border-radius: 8px; width: 22%; height: 80%; background-color: rgb(168,111,161);'>
+                                <span style='display: inline-block; margin-top: 80px;'>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(112,125,134);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(200,250,221);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(142,53,78);'></span>
+                                </span>
+                            </span>
+                            <div style="margin-top: 40px">
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(166,187,37);'></span>
+                                OR
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                AND
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                                ==>
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(166,187,37);'></span>
+                                OR
+                                <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                            </div>
+                        </div>
+                        <span id="fadeoutboolean" class="fragment"></span>
+                    </section>
+                    <section>
+                        <h3>Suggestions</h3>
+                        <p>Based on the index we want to be able to autocorrect</p><p>or suggest alternative query terms</p>
+                        <br/>
+                        <h4>Levenshtein distance</h4>
+                        <div style="font-size: 0.7em">
+                            <script type="math/tex">
+                        \qquad\operatorname{lev}_{a,b}(i,j) = \begin{cases}
+  \max(i,j) & \text{ if} \min(i,j)=0, \\
+  \min \begin{cases}
+          \operatorname{lev}_{a,b}(i-1,j) + 1 \\
+          \operatorname{lev}_{a,b}(i,j-1) + 1 \\
+          \operatorname{lev}_{a,b}(i-1,j-1) + 1_{(a_i \neq b_j)}
+       \end{cases} & \text{ otherwise.}
+\end{cases}
+                            </script></div>
+                        <br/>
+                        Example:
+                        <p>croccodial => crocodile</p>
+                        <ol>
+                            <li>deletion: croc<span style="color:red" class="fragment fade-out">c</span>odial</li>
+                            <li>replacement: crocodi<span style="color: red">l</span>l</li>
+                            <li>replacement: crocodil<span style="color: red">e</span></li>
+                        </ol>
+                    </section>
+                    <section>
+                        <p>Straightforward levehnstein can be a problem since it takes O(n*m) so with a really big index this can become expensive</p>
+                        <br/>
+                        <h4>Levenshtein automata</h4>
+                        <p>Provides an O(n) time test with any string where <i>n</i> is the length of the query term</p>
+                        <p>A finite state machine is constructed based on the query term and an edit distance and it's used to test other strings</p>
+                        <br />
+                        <p>Lucene uses a Levenshtein automata translated from a python implementation by one <i>Jean-Philippe Barrette-LaPierre</i> to Java because the Lucene committers originally didn't understand how it worked and couldn't get their own implementation working!</p>
+                    </section>
+
+                </section>
+                <section>
+                    <section>
+                        <h2>Ranking</h2>
+                        <p>When we have found documents that matches the query we want to sort them by relevance</p>
+                        <div style="border-radius: 8px; padding: 30px; width: 93%; height: 550px; background-color: rgba(0,0,0,.2);">
+                            <span style='display: block; margin: 0 auto; margin-bottom: 10px;border-radius: 5px; width: 22%; height: 50%; background-color: rgb(203,124,87);'>
+                                <span style='display: inline-block; margin-top: 80px;'>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(166,187,37);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(228,183,64);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                </span>
+                            </span>
+                            <span style='display: inline-block; border-radius: 5px; width: 22%; height:50%;background-color: rgb(208,54,122);'>
+                                <span style='display: inline-block; margin-top: 80px;'>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(236,107,12);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(185,20,235);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(190,74,30);'></span>
+                                </span>
+                            </span>
+                            <span style='display: inline-block; border-radius: 8px; width: 22%; height: 50%;background-color: rgb(168,111,161);'>
+                                <span style='display: inline-block; margin-top: 80px;'>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(221,18,212);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(112,125,134);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(200,250,221);'></span>
+                                    <span style='display: inline-block; border-radius: 15px; width: 30px; height: 30px; background-color: rgb(142,53,78);'></span>
+                                </span>
+                            </span>
+                        </section>
+                    <section>
+                        <h2>Vector Space Model</h2>
+                        <p>We represent both the document and the query as vectors</p>
+                        <div>
+                            <script type="math/tex">
+					d_j = ( w_{1,j} ,w_{2,j} , \dotsc ,w_{t,j} )
+                            </script>
+                        </div>
+                        <div>
+                            <script type="math/tex">
+					q = ( w_{1,q} ,w_{2,q} , \dotsc ,w_{t,q} )
+                            </script>
+                        </div>
+                        <p>The angle between the two vectors is our similarity score and as it gets smaller the documents are more similar</p>
+                        <img src="vector-space-model.jpg" />
+                    </section>
+                        <section>
+                            <h3>Weighting the documents</h3>
+                            <p>We wish to weigh the documents such that we can represent them as vectors</p>
+                            <p>Many different ways and variations to weighting exist</p>
+                        </section>
+                        <section>
+                            <h4>Term frequency–inverse document frequency</h4>
+                            <div>
+                                <script type="math/tex">
+					w_{t,d} = \mathrm{tf}_{t,d} \cdot \log{\frac{|D|}{|\{d' \in D \, | \, t \in d'\}|}}
+                            </script>
+                            </div>
+                            <br/>
+                            <p>Term frequencies can be raw frequencies or boolean frequencies or augmented frequencies to prevent bias toward longer documents</p>
+                            <p>Similar to the stoplist during analysis the inverse document frequency gives lower weight to terms that are very common in the document corpus.</p>
+                        </section>
+                        <section>
+                        <h3>Calculating the similarity</h3>
+
+                        <div>
+                            <span style="margin-right: 20px">
+
+                            <script type="math/tex">
+					\cos{\theta} = \frac{\mathbf{d_j} \cdot \mathbf{q}}{\left\| \mathbf{d_j} \right\| \left \| \mathbf{q} \right\|}
+                            </script>
+                            </span>
+                            <span style="margin-left: 20px">
+                                                            <script type="math/tex">
+					\left\| \mathbf{q} \right\| = \sqrt{\sum_{i=1}^n q_i^2}
+                            </script>
+                            </span>
+                            <div style="margin-top: 70px" class="fragment">
+                            <script type="math/tex">
+					\mathrm{sim}(d_j,q) = \frac{\mathbf{d_j} \cdot \mathbf{q}}{\left\| \mathbf{d_j} \right\| \left \| \mathbf{q} \right\|} = \frac{\sum _{i=1}^N w_{i,j}w_{i,q}}{\sqrt{\sum _{i=1}^N w_{i,j}^2}\sqrt{\sum _{i=1}^N w_{i,q}^2}}
+                            </script>
+
+                        </div>
+                            <p style="margin-top: 10px;" Gclass="fragment">Since we're using cosine the larger the similarity score the more relevant.</p>
+                    </section>
+                </section>
+                <section>
+                    <h2>References</h2>
+                    <p><a href="http://blog.mikemccandless.com/2011/03/lucenes-fuzzyquery-is-100-times-faster.html">Lucene story about Levehnstein Automata</a></p>
+                    <p><a href="http://en.wikipedia.org/wiki/Vector_space_model">Vector Space Model</a></p>
+                    <p><a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance</a></p>
+                    <p><a href="http://www.sammydress.com/Wholesale-Green-Croccodial-Slingbacks.html">Shop that sells <i>croccodial</i> slingbacks</a></p>
+                    <p><a href="http://informationretrieval.org/">Introduction to Information Retrieval by Christopher D. Manning, Prabhakar Raghavan & Hinrich Schütze</a></p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+            transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+            // Parallax scrolling
+            // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+            // parallaxBackgroundSize: '2100px 900px',
+            math: {
+                mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+            },
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'plugin/math/math.js', async: true }
+            ]
+        });
+
+        Reveal.addEventListener( 'slidechanged', function( event ) {
+            $("#toremovebooleandoc").css("opacity",1);
+        } );
+
+        Reveal.addEventListener("fragmentshown", function(event) {
+            $("#toremovebooleandoc").css("opacity",1);
+
+            if(event.fragment.id == "fadeoutboolean") {
+                $("#toremovebooleandoc").fadeTo("slow",0);
+            }
+            if(event.fragment.id == "sick") {
+                d3.select("#sick").select("svg").remove();
+
+                var svg = d3.select("#sick").append("svg").attr("width", 500).attr("height", 70);
+
+                var texts = svg
+                .selectAll("g")
+                .data([
+                    [ { t: "fish", x: 0 }, {t : "ing", x: 58 }],
+                    [ { t: "fish", x: 0 }, {t : "ed", x: 58 }],
+                    [ { t: "fish", x: 0 }, {t : "er", x: 58 }]
+                ])
+                .enter()
+                .append('svg:g');
+
+                texts .selectAll('text')
+                .data(function (d) { return d; })
+                .enter()
+                .append('text')
+                .style("fill", "white")
+                .attr("x", function (d, i, j) { return d.x + 200 * j; })
+                .attr("y", 50)
+                .text(function (d) { return d.t; })
+                .transition()
+                .duration(1800)
+                .style("fill", function (d, i) {
+                    if(i > 0) return "red";
+                    return "white"; })
+                .transition()
+                .style("opacity", function (d,i) { if (i > 0) return 0; })
+                .transition()
+                .attr("x", 200)
+                .transition()
+                .duration(1500)
+                .style("opacity", 0);
+
+
+            }
+        });
+    </script>
+    <script src="jquery-2.0.3.min.js" charset="utf-8"></script>
+    <script src="d3.v3.min.js" charset="utf-8"></script>
+</body>
+</html>

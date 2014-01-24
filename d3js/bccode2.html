@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>Setting up data</h2>
+        <pre style="font-size:22px;"><code>
+d3.csv('OlympicAthletes.csv', function (athletes){
+    //color: country, x: age, y: number of medals, r: pct gold medals
+    athletes.forEach(function (a) {
+        a.Age = +a.Age;
+        var tm = a["Total Medals"] = +a["Total Medals"];
+        var gm = a["Gold Medals"] = +a["Gold Medals"];
+        a["Silver Medals"] = +a["Silver Medals"];
+        a["Bronze Medals"] = +a["Bronze Medals"];
+        a.PctGoldMedals =  (gm / tm) * 100;
+        a.Year = +a.Year;
+    });
+...
+}
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

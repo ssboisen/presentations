@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>Analyzing and aggregating data</h2>
+        <pre style="font-size:22px;"><code>
+d3.csv('OlympicAthletes.csv', function (athletes){
+...
+var grpByYearAndCountry = d3.nest()
+    .key(function (d){ return d.Year; }).sortKeys(d3.ascending)
+    .key(function (d) { return d.Country; }).sortKeys(d3.ascending)
+    .rollup(function (leaves) {
+        var totalSum = 0, goldSum = 0, silverSum = 0, bronzeSum = 0, ageSum = 0;
+        for(var i = 0; i < leaves.length; i++){
+            var a = leaves[i];
+            totalSum += a["Total Medals"];
+            goldSum += a["Gold Medals"];
+            silverSum += a["Silver Medals"];
+            bronzeSum += a["Bronze Medals"];
+            ageSum += a.Age;
+        }
+
+        return {
+            TotalMedals: totalSum, GoldMedals: goldSum,
+            SilverMedals: silverSum, BronzeMedals: bronzeSum,
+            PctGoldMedals: (goldSum / totalSum),
+            AvgAge: ageSum / leaves.length, Country: leaves[0].Country };
+        })
+        .entries(athletes);
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

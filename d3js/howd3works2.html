@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2><a href="http://jsfiddle.net/DGg5w/">D3s Fluent Syntax</a></h2>
+        <pre style="font-size:32px;"><code>
+var dataset = [20, 5, 10, 11, 50];
+
+d3.select('body')
+  .selectAll('div')  // selection of virtual nodes
+  .data(dataset)  // data binding
+  .enter()
+    .append('div')  // dom manipulation
+      .style('height', "10px") //Static attribute
+      .style('margin-bottom', '1px')
+      .style('width', //dynamic attribute
+        function (d) { return d + "px"; })
+      .style('background-color', 'black');
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

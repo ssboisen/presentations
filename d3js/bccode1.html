@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>A few utility functions</h2>
+        <pre style="font-size:32px;"><code>
+function s(n) { return
+    function (d) { return d[n]; };
+};
+
+function comp(f1,f2) {
+    return function (d) { return f1(f2(d)); };
+};
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

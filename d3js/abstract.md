@@ -1,0 +1,4 @@
+D3: Visualizations like a boss
+-------------------------------------
+
+With the continous growth of data-collection of all types the skill to both technically and creatively distill the data into beautiful visualizations has become a great asset. However traditional data visualization tools like charting-libraries tend to limit your creativity and ability to think beyond the pie, line and column-chart. Data-Driven Documents helps you realize your datas full potential by giving you free hands to shape your datas visual language both statically and with animations. Building on simple but powerfull concepts D3 has become the premier visualizations library for the modern web with more than 20.000 watchers on GitHub. In this talk you will be introduced to these concepts and you will see how D3 can help you visualize an audio spectrum, a behavioral AI model, many users paths through a website, air-polution in Beijing and multi-dimensional data in 2D.

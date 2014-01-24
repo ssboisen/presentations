@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>Scales</h2>
+      <h3>A function mapping from data domain to visual range</h3>
+        <pre style="font-size:32px;"><code>
+var r = d3.scale.linear()
+          .domain(d3.extent(dataset))
+          .rangeRound([25, 100]);
+
+var color = d3.scale.linear()
+              .domain(d3.extent(dataset))
+              .range('green', 'black')
+
+d3.selectAll('circle')
+  .style('r', r)
+  .style('fill', color);
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

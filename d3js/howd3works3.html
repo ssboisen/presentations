@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>Enter, Update and Exit</h2>
+      <h3>Lifecycle of an element bound to data</h3>
+        <pre style="font-size:32px;"><code>
+// update
+var p = d3.select('body')
+  .selectAll('p')
+  .data(newData)  // elements that already in the DOM
+  .text(function(d) { return d + ' has been here all along'; });
+
+// enter
+p.enter()  // elements that are about to enter the DOM
+  .append('p')
+  .text(function(d) { return d + ' is new here'; });
+
+// exit
+p.exit()  // elements that are about to exit the DOM
+  .remove();
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

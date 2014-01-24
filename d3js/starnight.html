@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <link type="text/css" rel="stylesheet" href="style.css"/>
+        <style>
+            body {
+                background-color: black;
+            }
+            svg {
+                height: 100vh;
+                width: 100vw;
+            }
+            </style>
+    </head>
+    <body>
+        <svg></svg>
+        <script type="text/javascript" src="d3.v3.js"></script>
+        <script type="text/javascript" src="dancer.js"></script>
+        <script type="text/javascript">
+
+            var dancer = new Dancer();
+
+            var playing = false;
+            dancer.load({ src: "croctears.mp3" });
+	    dancer.bind('loaded', audioLoaded);
+
+            dancer.bind('update', audioUpdated);
+
+            var width = d3.select("svg").style('width'),
+                height = d3.select("svg").style('height'),
+                width = +width.substring(0,width.length - 2),
+                height = +height.substring(0,height.length - 2);
+
+            d3.select('svg')
+              .append('text')
+                .text('Crocodile Tears')
+                .attr('font-size','24px')
+                .attr('x', width)
+                .attr('dx', -30)
+                .attr('y', height)
+                .attr('dy', -70)
+                .attr('text-anchor', 'end')
+                .style('fill','rgba(255,255,255,0.8');
+
+            d3.select('svg')
+              .append('text')
+                .text('Little Hurricane')
+                .attr('font-size','18px')
+                .attr('x', width)
+                .attr('dx', -30)
+                .attr('y', height)
+                .attr('dy', -40)
+                .attr('text-anchor', 'end')
+                .style('fill','rgba(255,255,255,0.8');
+
+            function audioLoaded() {
+                d3.select('svg')
+                  .on('click', function() {
+                    playing = playing ? !dancer.pause() : !!dancer.play();
+                  });
+            };
+
+            function audioUpdated() {
+                var spectrum = this.getSpectrum();
+                var max = d3.max(spectrum);
+                var alpha = d3.scale.linear()
+                              .domain([0, max])
+                              .range([0, 0.8]);
+
+                var radius = d3.scale.sqrt()
+                               .domain([0, max])
+                               .range([2,10]);
+
+                var svg = d3.select('svg')
+                  .selectAll('circle')
+                  .data(spectrum)
+                   .attr('r', radius)
+                   .style('fill', 'white')
+                   .attr('fill-opacity', alpha);
+
+                svg.enter()
+                   .append('circle')
+                   .attr('cx', function (d) { return Math.random() * width; })
+                   .attr('cy', function (d) { return Math.random() * height;})
+                   .style('fill', 'black');
+
+                svg.exit()
+                   .remove();
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>Setting up radius scale</h2>
+        <pre style="font-size:22px;"><code>
+function update(data){
+
+    function updateCircles() {
+        this.transition()
+            .duration(1200)
+            .attr('cx', comp(x, s('AvgAge')))
+            .attr('cy', comp(y, s('TotalMedals')))
+            .attr('r', comp(r, s('PctGoldMedals')))
+            .style('opacity',1)
+    }
+...
+}
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

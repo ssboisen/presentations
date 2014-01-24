@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <link type="text/css" rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        D3: Visualizations like a boss
+        <p><svg style="width:950px;height:379px;"></svg></p>
+        <p><a target="_blank" href="http://github.com/ssboisen">
+            <img style="position:relative;top:2px;width:32px;height:32px;" src="octocat.png">
+            Simon Skov Boisen</a><br>
+            <a target="_blank" href="http://twitter.com/ssboisen"><img style="position:relative;top:2px;width:32px;height:32px;" src="twitter.png"> @ssboisen</a><br>
+            <a target="_blank" href="http://d60.dk"><img style="position:relative;top:2px;width:32px;height:32px;" src="d60_Logo.png"> d60</a></p>
+        <script type="text/javascript" src="d3.v3.js"></script>
+        <script type="text/javascript" src="dancer.js"></script>
+        <script type="text/javascript">
+
+            var curve = 8;
+            function scaleAudio(inAudio) {
+                var segmentLength = (inAudio.length / 2) / curve;
+                var segmentCounter = 0;
+                var segment = 0;
+                var counter = 0;
+                var index = 0;
+                var out = [];
+
+                while (index <= inAudio.length - 1) {
+                    out.push(inAudio[index] * 5 * 200);
+                    index += (segment * curve) + 1;
+                    counter += 1;
+                    segmentCounter += 1;
+                    if (segmentCounter > segmentLength - 1) {
+                        segment += 1;
+                        segmentCounter = 0;
+                    }
+                }
+
+                return out;
+            }
+
+            var dancer = new Dancer();
+
+            var playing = false;
+            dancer.load({ src: "crocrock.mp3" });
+            dancer.bind('loaded', onAudioLoaded);
+            dancer.bind('update', onAudioUpdated);
+
+            var mouseToCurveScale = d3.scale.linear()
+                                      .domain([0, 950])
+                                      .rangeRound([1, 100]);
+
+            var colorscale = d3.scale.linear()
+                               .domain([0,379])
+                               .range(['blue','red']);
+
+            function onAudioLoaded() {
+                d3.select('svg')
+                .on('mousemove', function() {
+                    var x = d3.mouse(this)[0];
+                    curve = mouseToCurveScale(x);
+                })
+                .on('click', function() {
+                    playing = playing ? !dancer.pause() : !!dancer.play();
+                });
+            }
+
+            function onAudioUpdated() {
+                var spectrum = scaleAudio(this.getSpectrum());
+
+                var y = d3.scale.linear()
+                .domain([0, d3.max(spectrum)])
+                .rangeRound([0, 379]);
+
+                var svg = d3
+                .select('svg')
+                .selectAll('rect')
+                .data(spectrum)
+                .attr('x', function (d, i) { return i * 950/spectrum.length ; })
+                .attr('width', 950/spectrum.length - 1)
+                .attr('y', function (d) { return 379 - y(d);})
+                .attr('height', function (d) { return y(d);  })
+                .style('fill', function (d) { return colorscale(y(d)); })
+
+                svg.enter()
+                .append('rect')
+		.attr('height', 5)
+
+                svg.exit()
+                .remove();
+            };
+
+
+
+
+        </script>
+    </body>
+</html>

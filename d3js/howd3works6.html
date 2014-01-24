@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>Transitions</h2>
+      <h3><a href="http://jsfiddle.net/c5YVX/39/">Custom attribute tweening</a></h3>
+        <pre style="font-size:32px;"><code>
+d3.selectAll('span.pctComplete')
+  .data([100])
+  .text("0%")
+  .transition()
+    .duration(2000)
+    .tween("text", function(d) {
+        var i = d3.interpolate(this.textContent, d);
+        return function(t) {
+            this.textContent = Math.round(i(t)) + "%"
+        };});
+
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

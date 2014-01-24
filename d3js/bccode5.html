@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>Setting up x-axis</h2>
+        <pre style="font-size:22px;"><code>
+var x = d3.scale.linear()
+          .domain([15, 50]) //age
+          .range([0, width]);
+
+var xAxis = d3.svg.axis()
+              .scale(x)
+              .orient('bottom');
+
+svg.append('g')
+   .attr('transform', 'translate(' + 0 + ',' + height + ')')
+   .attr('class', 'x axis')
+   .call(xAxis)
+ .append('text')
+   .attr('x', width)
+   .attr('text-anchor', 'end')
+   .attr('dy', -5)
+   .text('age');
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

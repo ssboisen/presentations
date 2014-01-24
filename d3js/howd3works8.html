@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+      <style>body > svg { position: static }</style>
+  </head>
+  <body>
+      <h2>Scalable Vector Graphics</h2>
+      <h3>Generators</h3>
+        <pre style="font-size:22px;"><code>
+var lineData = d3.range(90).map(function (i) {
+return { x: i * 10, y: Math.tan(i/5) * 0.1 * Math.sin(i) * 18 + 40 }});
+var svg = d3.select("body").append("svg");
+
+var lineFunction = d3.svg.line()
+                         .x(function(d) { return d.x; })
+                         .y(function(d) { return d.y; })
+                         .interpolate("basis");
+
+var lineGraph = svg.append("path")
+                            .attr("d", lineFunction(lineData))
+                            .attr("stroke", "blue").attr("stroke-width", 2)
+                            .attr("fill", "none");
+        </code></pre>
+      <script type="text/javascript" src="d3.v3.js"></script>
+      <script type="text/javascript" src="hi.js"></script>
+      <script>
+
+          var lineData = d3.range(90).map(function (i) { return { x: i * 10, y: Math.tan(i/5) * 0.1 * Math.sin(i) * 18 + 43 }});
+
+          var lineFunction = d3.svg.line()
+          .x(function(d) { return d.x; })
+          .y(function(d) { return d.y; })
+          .interpolate("basis");
+
+          var svg = d3.select("body").append("svg");
+
+          var lineGraph = svg.append("path")
+          .attr("d", lineFunction(lineData))
+          .attr("stroke", "blue")
+          .attr("stroke-width", 2)
+          .attr('fill','none')
+      </script>
+  </body>
+</html>

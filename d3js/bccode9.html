@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>Updating visualization</h2>
+        <pre style="font-size:22px;"><code>
+var svg = d3.select('svg')
+            .selectAll('circle')
+            .data(data.countries);
+
+svg.call(updateCircles);
+
+svg.enter()
+ .append('circle')
+   .style('fill-opacity', 0.7)
+   .style("fill",function() { return "hsl(" + Math.random() * 360 + ",100%,50%)"; })
+   .style('opacity', 0)
+   .call(updateCircles)
+
+svg.exit()
+   .transition()
+   .duration(1200)
+   .style('opacity', 0)
+   .remove()
+
+d3.select('h2').text(data.year);
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

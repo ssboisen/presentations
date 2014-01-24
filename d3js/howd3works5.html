@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+      <h2>Transitions</h2>
+      <h3>Smooth animations when data changes or on demand</h3>
+        <pre style="font-size:32px;"><code>
+d3.selectAll('circle')
+  .enter()
+  .transition()
+    .delay(function(d, i) {
+      return i * 50;
+    })
+    .style('r', function(d) {
+        return d.value;
+    });
+        </code></pre>
+      <script type="text/javascript" src="hi.js"></script>
+  </body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <link type="text/css" rel="stylesheet" href="style.css"/>
+        <style>
+            .axis.y, .axis.x {
+                font-size: 12px;
+            }
+            .axis line,
+            .axis path {
+                fill: none;
+                stroke: #000;
+                shape-rendering: crispEdges;
+            }
+            svg {
+                margin-top: 85px;
+                margin-left: 150px;
+                width: 80vw;
+                height: 80vh;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>2000</h2>
+        <svg></svg>
+        <script type="text/javascript" src="d3.v3.js"></script>
+        <script>
+            function s(n) { return function (d) { return d[n]; }; };
+            function comp(f1,f2) { return function (d) { return f1(f2(d)); }; };
+
+            d3.csv('OlympicAthletes.csv', function (athletes){
+                //color: country, x: age, y: number of medals, r: pct gold medals
+                athletes.forEach(function (a) {
+                    a.Age = +a.Age;
+                    var tm = a["Total Medals"] = +a["Total Medals"];
+                    var gm = a["Gold Medals"] = +a["Gold Medals"];
+                    a["Silver Medals"] = +a["Silver Medals"];
+                    a["Bronze Medals"] = +a["Bronze Medals"];
+                    a.PctGoldMedals =  (gm / tm) * 100;
+                    a.Year = +a.Year;
+                });
+
+                var grpByYearAndCountry = d3.nest()
+                    .key(function (d){ return d.Year; }).sortKeys(d3.ascending)
+                    .key(function (d) { return d.Country; }).sortKeys(d3.ascending)
+                    .rollup(function (leaves) {
+                        var totalSum = 0,
+                            goldSum = 0,
+                            silverSum = 0,
+                            bronzeSum = 0,
+                            ageSum = 0;
+                        for(var i = 0; i < leaves.length; i++){
+                            var a = leaves[i];
+                            totalSum += a["Total Medals"];
+                            goldSum += a["Gold Medals"];
+                            silverSum += a["Silver Medals"];
+                            bronzeSum += a["Bronze Medals"];
+                            ageSum += a.Age;
+                        }
+
+                        return {
+                            TotalMedals: totalSum,
+                            GoldMedals: goldSum,
+                            SilverMedals: silverSum,
+                            BronzeMedals: bronzeSum,
+                            PctGoldMedals: (goldSum / totalSum),
+                            AvgAge: ageSum / leaves.length, Country: leaves[0].Country };
+                    })
+                    .entries(athletes);
+
+                var margin = {top: 35, right: 35, bottom: 35, left: 35},
+                    width = 960 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom;
+
+                var svg = d3.select("body").append("svg")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                var x = d3.scale.linear()
+                          .domain([15, 50])
+                          .range([0, width]);
+
+                var xAxis = d3.svg.axis()
+                              .scale(x)
+                              .orient('bottom');
+
+                svg.append('g')
+                    .attr('transform', 'translate(' + 0 + ',' + height + ')')
+                    .attr('class', 'x axis')
+                    .call(xAxis)
+                    .append('text')
+                    .attr('x', width)
+                    .attr('text-anchor', 'end')
+                    .attr('dy', -5)
+                    .text('age');
+
+                var y = d3.scale.sqrt()
+                          .domain([0, 350])
+                          .range([height, 0]);
+
+                var yAxis = d3.svg.axis()
+                              .scale(y)
+                              .orient("left");
+
+                svg.append("g")
+                   .attr("class", "y axis")
+                   .call(yAxis)
+                 .append('text')
+                   .attr('dx', 5)
+                   .attr('dy', 10)
+                   .text('number of medals');
+
+
+                var tooltip = d3.select("body")
+                                .append("h3")
+                                .style("z-index", "10")
+                                //.style("visibility", "hidden")
+
+                function formatTooltip(d) { return d.Country + ": " + d.TotalMedals + " total, " + d3.format("%")(d.PctGoldMedals) + " gold (" + d["GoldMedals"] + "/" + d["SilverMedals"] + "/" + d["BronzeMedals"] + ")"; }
+
+
+                var r = d3.scale.sqrt()
+                          .domain([0, 1])
+                          .range([3, 15]);
+
+                function getData(index){
+                    var data = grpByYearAndCountry[index];
+                    return { year: data.key, countries: data.values.map(s('values')) };
+                }
+
+                function update(data){
+
+                    function updateCircles() {
+                        this
+                        .transition()
+                        .duration(1200)
+                        .attr('cx', comp(x, s('AvgAge')))
+                        .attr('cy', comp(y, s('TotalMedals')))
+                        .attr('r', comp(r, s('PctGoldMedals')))
+                        .style('opacity',1)
+                    }
+
+                    var svg = d3.select('svg')
+                                .selectAll('circle')
+                                .data(data.countries);
+
+                    svg.call(updateCircles)
+
+                    svg .enter()
+                      .append('g')
+                        .append('circle')
+                        .style('fill-opacity', 0.7)
+                        .style("fill",function() { return "hsl(" + Math.random() * 360 + ",100%,50%)"; })
+                        .style('opacity', 0)
+                        .call(updateCircles)
+                        .append('title')
+
+
+                    svg.exit()
+                       .transition()
+                       .duration(1200)
+                       .style('opacity', 0)
+                       .remove()
+
+                    d3.select('h2').text(data.year);
+                }
+
+                update(getData(0));
+
+                var counter = 1;
+                setInterval(function () {
+                    update(getData(counter++ % grpByYearAndCountry.length));
+                }, 3000)
+             });
+        </script>
+    </body>
+</html>

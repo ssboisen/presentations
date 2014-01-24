@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>D3: Visualizations like a boss</title>
+    <link type="text/css" rel="stylesheet" href="present/present.css"></script>
+  </head>
+  <body>
+    <iframe id="previous"></iframe>
+    <iframe id="current"></iframe>
+    <iframe id="next"></iframe>
+    <script type="text/javascript">
+        var slides = [
+            "title.html",
+            "whatisd3.html",
+            "wilkinson.html",
+            "tools.html",
+            "starnight.html",
+            "howd3works1.html",
+            "howd3works2.html",
+            "howd3works3.html",
+            "howd3works4.html",
+            "howd3works5.html",
+            "howd3works6.html",
+            "howd3works7.html",
+            "howd3works8.html",
+            "boublechart.html",
+            "bccode1.html",
+            "bccode2.html",
+            "bccode3.html",
+            "bccode4.html",
+            "bccode5.html",
+            "bccode6.html",
+            "bccode7.html",
+            "bccode8.html",
+            "bccode9.html",
+            "boublechart.html",
+            "periodictable.html",
+            "boid.html",
+            "sequences.html",
+            "bj-air.html"
+        ];
+    </script>
+    <script type="text/javascript" src="d3.v3.js"></script>
+    <script type="text/javascript" src="present/present.js"></script>
+    <script>
+        setInterval(function () {
+            var currentIndex = +location.hash.substring(1) || 0;
+            if(currentIndex === 4) {
+                d3.select('body')
+                .style('background-color','black')
+            }
+            else {
+                d3.select('body')
+                .style('background-color',null)
+            }
+        }, 100);
+    </script>
+  </body>
+</html>

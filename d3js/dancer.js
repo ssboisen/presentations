@@ -1,7 +1,9 @@
-/* dancer.js - v0.3.2 - 2012-09-29
-* https://github.com/jsantell/dancer.js
-* Copyright (c) 2012 Jordan Santell; Licensed MIT */
-
+/*
+ * dancer - v0.4.0 - 2014-02-01
+ * https://github.com/jsantell/dancer.js
+ * Copyright (c) 2014 Jordan Santell
+ * Licensed MIT
+ */
 (function() {
 
   var Dancer = function () {
@@ -258,7 +260,7 @@
   Dancer._getAdapter = function ( instance ) {
     switch ( Dancer.isSupported() ) {
       case 'webaudio':
-        return new Dancer.adapters.webkit( instance );
+        return new Dancer.adapters.webaudio( instance );
       case 'audiodata':
         return new Dancer.adapters.moz( instance );
       case 'flash':
@@ -309,7 +311,7 @@
   };
 
   Kick.prototype = {
-    on  : function () {
+    on  : function () { 
       this.isOn = true;
       return this;
     },
@@ -383,11 +385,19 @@
       this.isLoaded = false;
       this.progress = 0;
 
-      this.proc = this.context.createJavaScriptNode( SAMPLE_SIZE / 2, 1, 1 );
+      if (!this.context.createScriptProcessor) {
+        this.context.createScriptProcessor = this.context.createJavascriptNode;
+      }
+      this.proc = this.context.createScriptProcessor( SAMPLE_SIZE / 2, 1, 1 );
+
       this.proc.onaudioprocess = function ( e ) {
         _this.update.call( _this, e );
       };
-      this.gain = this.context.createGainNode();
+      if (!this.context.createGain) {
+        this.context.createGain = this.context.createGainNode;
+      }
+
+      this.gain = this.context.createGain();
 
       this.fft = new FFT( SAMPLE_SIZE / 2, SAMPLE_RATE );
       this.signal = new Float32Array( SAMPLE_SIZE / 2 );
@@ -481,7 +491,7 @@
     this.dancer.trigger( 'loaded' );
   }
 
-  Dancer.adapters.webkit = adapter;
+  Dancer.adapters.webaudio = adapter;
 
 })();
 
@@ -732,9 +742,9 @@
 
 })();
 
-/*
+/* 
  *  DSP.js - a comprehensive digital signal processing  library for javascript
- *
+ * 
  *  Created by Corban Brook <corbanbrook@gmail.com> on 2010-01-01.
  *  Copyright 2010 Corban Brook. All rights reserved.
  *
@@ -770,7 +780,7 @@ function FourierTransform(bufferSize, sampleRate) {
         imag      = this.imag,
         bSi       = 2 / this.bufferSize,
         sqrt      = Math.sqrt,
-        rval,
+        rval, 
         ival,
         mag;
 
@@ -800,7 +810,7 @@ function FourierTransform(bufferSize, sampleRate) {
  */
 function FFT(bufferSize, sampleRate) {
   FourierTransform.call(this, bufferSize, sampleRate);
-
+   
   this.reverseTable = new Uint32Array(bufferSize);
 
   var limit = 1;
@@ -870,7 +880,7 @@ FFT.prototype.forward = function(buffer) {
     //phaseShiftStepImag = Math.sin(-Math.PI/halfSize);
     phaseShiftStepReal = cosTable[halfSize];
     phaseShiftStepImag = sinTable[halfSize];
-
+    
     currentPhaseShiftReal = 1;
     currentPhaseShiftImag = 0;
 
@@ -941,7 +951,7 @@ var FlashDetect = new function(){
     ];
     /**
      * Extract the ActiveX version of the plugin.
-     *
+     * 
      * @param {Object} The flash ActiveX object.
      * @type String
      */
@@ -954,7 +964,7 @@ var FlashDetect = new function(){
     };
     /**
      * Try and retrieve an ActiveX object having a specified name.
-     *
+     * 
      * @param {String} name The ActiveX object name lookup.
      * @return One of ActiveX object or a simple object having an attribute of activeXError with a value of true.
      * @type Object
@@ -970,8 +980,8 @@ var FlashDetect = new function(){
     };
     /**
      * Parse an ActiveX $version string into an object.
-     *
-     * @param {String} str The ActiveX Object GetVariable($version) return value.
+     * 
+     * @param {String} str The ActiveX Object GetVariable($version) return value. 
      * @return An object having raw, major, minor, revision and revisionStr attributes.
      * @type Object
      */
@@ -987,7 +997,7 @@ var FlashDetect = new function(){
     };
     /**
      * Parse a standard enabledPlugin.description into an object.
-     *
+     * 
      * @param {String} str The enabledPlugin.description value.
      * @return An object having raw, major, minor, revision and revisionStr attributes.
      * @type Object
@@ -999,14 +1009,14 @@ var FlashDetect = new function(){
         return {
             "raw":str,
             "major":parseInt(majorMinor[0], 10),
-            "minor":parseInt(majorMinor[1], 10),
+            "minor":parseInt(majorMinor[1], 10), 
             "revisionStr":revisionStr,
             "revision":parseRevisionStrToInt(revisionStr)
         };
     };
     /**
      * Parse the plugin revision string into an integer.
-     *
+     * 
      * @param {String} The revision in string format.
      * @type Number
      */
@@ -1015,7 +1025,7 @@ var FlashDetect = new function(){
     };
     /**
      * Is the major version greater than or equal to a specified version.
-     *
+     * 
      * @param {Number} version The minimum required major version.
      * @type Boolean
      */
@@ -1024,7 +1034,7 @@ var FlashDetect = new function(){
     };
     /**
      * Is the minor version greater than or equal to a specified version.
-     *
+     * 
      * @param {Number} version The minimum required minor version.
      * @type Boolean
      */
@@ -1033,7 +1043,7 @@ var FlashDetect = new function(){
     };
     /**
      * Is the revision version greater than or equal to a specified version.
-     *
+     * 
      * @param {Number} version The minimum required revision version.
      * @type Boolean
      */
@@ -1042,7 +1052,7 @@ var FlashDetect = new function(){
     };
     /**
      * Is the version greater than or equal to a specified major, minor and revision.
-     *
+     * 
      * @param {Number} major The minimum required major version.
      * @param {Number} (Optional) minor The minimum required minor version.
      * @param {Number} (Optional) revision The minimum required revision version.
@@ -1075,7 +1085,7 @@ var FlashDetect = new function(){
                 var versionObj = parseStandardVersion(version);
                 self.raw = versionObj.raw;
                 self.major = versionObj.major;
-                self.minor = versionObj.minor;
+                self.minor = versionObj.minor; 
                 self.revisionStr = versionObj.revisionStr;
                 self.revision = versionObj.revision;
                 self.installed = true;
@@ -1091,7 +1101,7 @@ var FlashDetect = new function(){
                         var versionObj = parseActiveXVersion(version);
                         self.raw = versionObj.raw;
                         self.major = versionObj.major;
-                        self.minor = versionObj.minor;
+                        self.minor = versionObj.minor; 
                         self.revision = versionObj.revision;
                         self.revisionStr = versionObj.revisionStr;
                     }
